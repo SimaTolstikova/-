@@ -1,0 +1,56 @@
+s=input()
+stack = []
+for i in s:
+    if i in "+-*/":
+        b = int(stack.pop())
+        a = int(stack.pop())
+        if   i=="+":
+            c=a+b
+        elif i=="-":
+            c=a-b
+        elif i=="*":
+            c=a*b
+        elif i=="/":
+            c=a/b
+        stack.append(c)
+    else:
+        stack.append(i)
+print(stack[0])
+
+import kotlin.math.sin
+fun min(){
+    var vyragenie = listOf("4","5","+")
+    var stack = mutableListOf<Float>()
+    for(element in vyragenie){
+        when (element){
+            "+" -> {
+                var a1 = stack.removeLast()
+                var a2 = stack.removeLast()
+                stack.add(a1+a2)
+            }
+            "-" -> {
+                var a1 = stack.removeLast()
+                var a2 = stack.removeLast()
+                stack.add(a1-a2)
+            }
+            "*" -> {
+                var a1 = stack.removeLast()
+                var a2 = stack.removeLast()
+                stack.add(a1*a2)
+            }
+            "/" -> {
+                var a1 = stack.removeLast()
+                var a2 = stack.removeLast()
+                stack.add(a1/a2)
+            }
+            "sin" -> {
+                var a1 = stack.removeLast()
+                stack.add(sin(a1))
+            }
+            else->{
+                stack.add(element.toFloat())
+            }
+        }
+    }
+    print(stack)
+}
