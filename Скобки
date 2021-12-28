@@ -1,0 +1,61 @@
+s=input()
+stack=[]
+prav=True
+for i in s:
+    if i in '([{':
+        stack.append(i)
+    elif i in ')]}':
+        if len(stack)==0:
+            prav=False
+            break
+        j=stack.pop()
+        if j=='(' and i==')':
+            continue
+        if j=='[' and i==']':
+            continue
+        if j=='{' and i=='}':
+            continue
+        prav=False
+        break
+if prav==True and len(stack)==0:
+    print('Правильная')
+else:
+    print('Неправильная')
+
+
+import java.util.Stack
+fun main() {
+    var stroka = "((){}{}99())"
+    var stack = Stack<Char>()
+    var prav = true
+    if (stroka.length % 2 == 0) {
+        for (element in stroka) {
+            if (element in "([{") {
+                stack.push(element)
+            } else {
+                if (element in ")]}") {
+                    if (stack.isEmpty()) {
+                        prav = false
+                        break
+                    }
+                    var j = stack.pop()
+                    if (((j == '(') and (element == ')')) || ((j == '[') and (element == ']'))||((j == '{') and (element == '}'))){
+                        continue
+                    }
+                }
+                prav = false
+                break
+            }
+        }
+        if ((prav == true) and (stack.isEmpty())){
+            println("Правильная")
+        }else{
+            println("Неправильная")
+        }
+    }else {
+        println("Неправильная")
+    }
+}
+
+        
+        
