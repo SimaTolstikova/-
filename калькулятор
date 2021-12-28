@@ -1,0 +1,130 @@
+import  kotlin.math. *
+ 
+ 
+fun main ( )  {
+    var postfixList = inf2post ( " 22-2 * (2 + 2 + 2) / (2 + 2)" )
+    calcPost ( postfixList )
+ 
+    println ( )
+ 
+    postfixList = inf2post ( "13 + 5 * (2 ^ 3 + 1)" )
+    calcPost ( postfixList )
+ 
+    println ( )
+ 
+    postfixList = inf2post ( "4 ^ 3 - 8 ^ 2 + 9 ^ (2 + 1) - sin (2 ^ 2 * 2)" )
+    calcPost ( postfixList )
+ 
+    println ( )
+ 
+    postfixList = inf2post ( "12 - 2 * sin (5/3) ^ 4.1" )
+    calcPost ( postfixList )
+}
+ 
+ 
+fun parseExpression ( выражение :  String ) : List < String >  {
+    val pattern =  "-? \\ d + ( \\ . \\ d)? | \\ (| \\ ) | \\ + | - | \\ * | / | \\ ^ | (sin)" . toRegex ( )
+ 
+    образец возврата . findAll ( выражение ) . карта  { это. значение  } . toList ( )
+}
+ 
+ 
+fun inf2post ( ввод :  Строка ) : Список < Строка >  {
+    println ( "Введено инфиксное выражение: $ input" )
+    val infixExpression = parseExpression ( ввод )
+ 
+    val priority = mapOf ( "+" к 1 , "-" к 1 , "*" к 2 , "/" к 2 , "^" к 3 , "sin" к 3 )
+    val postfixExpression = mutableListOf < строка > ( )
+    val stack = mutableListOf < строка > ( )
+ 
+    for  ( s in infixExpression )  {
+        val numeric = s. соответствует ( "-? \\ d + ( \\ . \\ d +)?" . toRegex ( ) )
+ 
+        если  ( числовое ) postfixExpression. добавить ( и )
+        else  {
+            when  ( s )  {
+                "("  ->  {
+                    куча. добавить ( и )
+                }
+ 
+                ")"  ->  {
+                    while  ( stack. last ( )  ! =  "(" )
+                        postfixExpression. добавить ( стек. removeLast ( ) )
+                    куча. removeLast ( )
+                }
+ 
+                else  ->  {
+                    while  ( ( stack. isNotEmpty ( ) )  &&
+                        ( стек. last ( )  ! =  "(" )  &&
+                        ( приоритет. getValue ( s )  <= priority. getValue ( stack. last ( ) ) ) )
+                        postfixExpression. добавить ( стек. removeLast ( ) )
+                    куча. добавить ( и )
+                }
+            }
+        }
+    }
+ 
+    while  ( stack. isNotEmpty ( ) )  {
+        postfixExpression. добавить ( стек. removeLast ( ) )
+    }
+ 
+    print ( "Результирующее постфиксное выражение:" )
+    println ( postfixExpression. joinToString ( "" ) )
+ 
+    вернуть postfixExpression. toList ( )
+}
+ 
+ 
+fun calcPost ( list : List < String > ) :  Float  {
+    val stack = mutableListOf < Float > ( )
+    var результат :  Float
+    var buffer :  Float
+ 
+    for  ( s в списке )  {
+        when ( s )  {
+            "+"  ->  {
+                результат = стек. removeLast ( )
+                результат + = стек. removeLast ( )
+                куча. добавить ( результат )
+            }
+ 
+            "-"  ->  {
+                буфер = стек. removeLast ( )
+                результат = стек. removeLast ( )  - буфер
+                куча. добавить ( результат )
+            }
+ 
+            "*"  ->  {
+                результат = стек. removeLast ( )
+                результат * = стек. removeLast ( )
+                куча. добавить ( результат )
+            }
+ 
+            "/"  ->  {
+                буфер = стек. removeLast ( )
+                результат = стек. removeLast ( )  / буфер
+                куча. добавить ( результат )
+            }
+ 
+            "^"  ->  {
+                буфер = стек. removeLast ( )
+                результат = стек. removeLast ( ) . pow ( буфер )
+                куча. добавить ( результат )
+            }
+ 
+            "грех"  ->  {
+                результат = грех ( стек. removeLast ( ) )
+                куча. добавить ( результат )
+            }
+ 
+            else  ->  {
+                куча. добавить ( s. toFloat ( ) )
+            }
+        }
+    }
+ 
+    print ( "Окончательный результат расчета:" )
+    println ( стек [ 0 ] )
+ 
+    стек возврата [ 0 ]
+}
