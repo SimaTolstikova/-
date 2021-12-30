@@ -31,7 +31,7 @@ fun min(){
             "-" -> {
                 var a1 = stack.removeLast()
                 var a2 = stack.removeLast()
-                stack.add(a1-a2)
+                stack.add(a2-a1)
             }
             "*" -> {
                 var a1 = stack.removeLast()
@@ -41,7 +41,7 @@ fun min(){
             "/" -> {
                 var a1 = stack.removeLast()
                 var a2 = stack.removeLast()
-                stack.add(a1/a2)
+                stack.add(a2/a1)
             }
             "sin" -> {
                 var a1 = stack.removeLast()
